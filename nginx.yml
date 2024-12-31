@@ -1,4 +1,9 @@
 ---
+- name: Add hosts to known_hosts
+  shell: |
+    ssh-keyscan -H {{ inventory_hostname }} >> ~/.ssh/known_hosts
+  delegate_to: localhost
+  ignore_errors: yes
 - name: Install and configure Nginx
   hosts: all
   become: true
