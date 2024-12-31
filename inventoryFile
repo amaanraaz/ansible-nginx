@@ -1,1 +1,9 @@
-web01 ansible_host=34.227.22.233 ansible_user=ubuntu
+---
+ansible_user: ubuntu
+ansible_ssh_private_key_file: /home/ubuntu/key_pair.pem
+plugin: aws_ec2
+filters:
+  tag:Name: "nginx-*"
+keyed_groups:
+  - key: tags
+    prefix: nginx-
