@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+    
+    environment {
+        // Disable SSH host key checking to avoid verification prompt
+        ANSIBLE_HOST_KEY_CHECKING = 'False'
+    }
+
+    stages {
+        stage('checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/amaanraaz/ansible-nginx.git'
+            }
+        }
+        
+        stage('playbook exec'){
+            steps{
+                ansiblePlaybook credentialsId: '371b4f37-1f01-47c7-aac3-016ee12aae56', inventory: 'aws_ec2.yml', 
+                playbook: 'nginx.yml'
+            }
+        }
+    }
+}
